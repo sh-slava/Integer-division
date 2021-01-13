@@ -4,9 +4,10 @@ public class Main {
 
   public static void main(String[] args) {
     
-    Division division = new Division();
+    LongDivision longDivision = new LongDivision();
     int dividend = 78945;
     int divisor = 4;
-    System.out.println(division.doLongDivision(dividend, divisor));
+    
+    System.out.println(longDivision.doDivision(dividend, divisor));
   }
 }

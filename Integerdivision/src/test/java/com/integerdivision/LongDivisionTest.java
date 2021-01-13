@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class LongDivisionTest {
   
-  Division division = new Division();
+  LongDivision longDivision = new LongDivision();
 
   @Test
   void doDivision_whenSimpleIntegers() {      
@@ -28,7 +28,7 @@ class LongDivisionTest {
       + "    --" + System.lineSeparator()
       + "     1" + System.lineSeparator();
     
-    String actual = division.doLongDivision(78945, 4);   
+    String actual = longDivision.doDivision(78945, 4);   
     assertEquals(expected, actual);
   }
   
@@ -40,7 +40,7 @@ class LongDivisionTest {
       + " ----|1" + System.lineSeparator()
       + "    0" + System.lineSeparator();
     
-    String actual = division.doLongDivision(9876, 9876);
+    String actual = longDivision.doDivision(9876, 9876);
     assertEquals(expected, actual);    
   }
   
@@ -55,7 +55,7 @@ class LongDivisionTest {
       + "   -" + System.lineSeparator()
       + "   0" + System.lineSeparator();
     
-    String actual = division.doLongDivision(-123, 3);
+    String actual = longDivision.doDivision(-123, 3);
     assertEquals(expected, actual);
   }
   
@@ -70,7 +70,7 @@ class LongDivisionTest {
       + "   -" + System.lineSeparator()
       + "   0" + System.lineSeparator();
     
-    String actual = division.doLongDivision(123, -3);
+    String actual = longDivision.doDivision(123, -3);
     assertEquals(expected, actual);
   }
   
@@ -85,19 +85,19 @@ class LongDivisionTest {
       + "   -" + System.lineSeparator()
       + "   0" + System.lineSeparator();
     
-    String actual = division.doLongDivision(-123, -3);
+    String actual = longDivision.doDivision(-123, -3);
     assertEquals(expected, actual);
   }
   
   @Test
   void doDivision_shouldThrowException_whenDividendLessThanDivisor() {
-    assertThrows(ArithmeticException.class, () -> division.doLongDivision(123, 0));  
+    assertThrows(ArithmeticException.class, () -> longDivision.doDivision(123, 0));  
   }
   
   @Test
   void doDivision_shouldReturnString_whenDividentLessThanDivisor() {
     String expected = "Result of integer division 123 / 124 = 0";
-    String actual = division.doLongDivision(123, 124);   
+    String actual = longDivision.doDivision(123, 124);   
     assertEquals(expected, actual);
   }
 }
