@@ -15,12 +15,11 @@ public class DivisionUtils {
   }
 
   public static int countDigits(int number) {
-    int count = 0;
-
-    while (number != 0) {
-      number /= 10;
-      count++;
-    }
-    return count;
+    if (number != 0) {
+      return (int) Math.log10(number) + 1;
+    } 
+    else {
+      return 1;
+    }    
   }
 }
