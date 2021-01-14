@@ -1,25 +1,24 @@
 package com.integerdivision;
 
-public class LongDivision {
+import java.util.*;
 
-  private StringBuilder result;
+public class LongDivision {
   private StringBuilder remainder;
   private StringBuilder quotient;
-  private final String LINE_SEPARATOR;
+  private List<IntermediateResult> intermediateResults;
 
   public LongDivision() {
-    this.result = new StringBuilder();
     this.remainder = new StringBuilder();
     this.quotient = new StringBuilder();
-    this.LINE_SEPARATOR = System.lineSeparator();
+    this.intermediateResults = new ArrayList<>();
   }
 
-  public String doDivision(int dividend, int divisor) {
+  public DivisionResultDTO doDivision(int dividend, int divisor) {
 
     if (divisor == 0) {
       throw new ArithmeticException("Error! Divisor should be above zero");
     }
-    
+
     if (dividend < 0) {
       dividend = Math.abs(dividend);
     }
@@ -27,20 +26,23 @@ public class LongDivision {
     if (divisor < 0) {
       divisor = Math.abs(divisor);
     }
-    
-    if (dividend < divisor) {
-      return "Result of integer division " + dividend + " / " + divisor + " = 0";
-    }
 
+    if (dividend < divisor) {
+      quotient.append("0");
+      intermediateResults.add(new IntermediateResult(dividend, 0, dividend, Integer.toString(dividend).length() - 1));
+      return getDivisionResultDTO(dividend, divisor);
+    }
+    
     return getResultOfDivision(dividend, divisor);
   }
 
-  private String getResultOfDivision(int dividend, int divisor) {
+  private DivisionResultDTO getResultOfDivision(int dividend, int divisor) {
     String[] dividendDigits = String.valueOf(dividend).split("");
     int localDividend;
     int mod;
     int digitsInDivisor = DivisionUtils.countDigits(divisor);
     int squareLocalResult;
+    int count;
 
     for (int i = 0; i < dividendDigits.length; i++) {
       remainder.append(dividendDigits[i]);
@@ -49,45 +51,26 @@ public class LongDivision {
       if (localDividend >= divisor) {
         mod = localDividend % divisor;
         squareLocalResult = (localDividend / divisor) * divisor;
+        count = i;
 
-        String localDividendString = String.format("%" + (i + 2) + "s", "_" + Integer.toString(localDividend));
-        result.append(localDividendString).append(LINE_SEPARATOR);
-
-        String squareLocalResultString = String.format("%" + (i + 2) + "d", squareLocalResult);
-        result.append(squareLocalResultString).append(LINE_SEPARATOR);
-
-        int numberOfSpaces = localDividendString.length() - DivisionUtils.countDigits(squareLocalResult);
-        int numberOfDashes = DivisionUtils.countDigits(localDividend);
-        result.append(DivisionUtils.makeDelimiter(numberOfSpaces, numberOfDashes)).append(LINE_SEPARATOR);
-
+        intermediateResults.add(new IntermediateResult(localDividend, squareLocalResult, mod, count));
         quotient.append(localDividend / divisor);
-
         remainder.replace(0, remainder.length(), Integer.toString(mod));
-        localDividend = Integer.parseInt(remainder.toString());
-      } 
-      else {
+      } else {
         if (i >= digitsInDivisor) {
           quotient.append(0);
         }
       }
-
-      if (i == dividendDigits.length - 1) {
-        result.append(String.format("%" + (i + 2) + "s", Integer.toString(localDividend))).append(LINE_SEPARATOR);
-      }
     }
-    
-    return prettyFormatting(dividend, divisor);
+    return getDivisionResultDTO(dividend, divisor);
   }
 
-  private String prettyFormatting(int dividend, int divisor) {
-    Formatter formatter = new Formatter();
-
+  private DivisionResultDTO getDivisionResultDTO(int dividend, int divisor) {
     DivisionResultDTO dto = new DivisionResultDTO();
     dto.setDividend(dividend);
     dto.setDivisor(divisor);
-    dto.setResult(result);
     dto.setQuotient(quotient);
-
-    return formatter.format(dto);
+    dto.setIntermediateResults(intermediateResults);
+    return dto;
   }
 }

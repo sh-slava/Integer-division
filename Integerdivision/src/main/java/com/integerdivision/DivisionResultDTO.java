@@ -1,40 +1,42 @@
 package com.integerdivision;
 
+import java.util.List;
+
 public class DivisionResultDTO {
-    private int dividend;
-    private int divisor;
-    private StringBuilder result;
-    private StringBuilder quotient;
+  private int dividend;
+  private int divisor;
+  private StringBuilder quotient;
+  private List<IntermediateResult> intermediateResults;
 
-    public int getDividend() {
-        return dividend;
-    }
+  public int getDividend() {
+      return dividend;
+  }
 
-    public void setDividend(int dividend) {
-        this.dividend = dividend;
-    }
+  public void setDividend(int dividend) {
+      this.dividend = dividend;
+  }
 
-    public int getDivisor() {
-        return divisor;
-    }
+  public int getDivisor() {
+      return divisor;
+  }
 
-    public void setDivisor(int divisor) {
-        this.divisor = divisor;
-    }
+  public void setDivisor(int divisor) {
+      this.divisor = divisor;
+  }
 
-    public StringBuilder getResult() {
-        return result;
-    }
+  public StringBuilder getQuotient() {
+      return quotient;
+  }
 
-    public void setResult(StringBuilder result) {
-        this.result = result;
-    }
+  public void setQuotient(StringBuilder quotient) {
+      this.quotient = quotient;
+  }
 
-    public StringBuilder getQuotient() {
-        return quotient;
-    }
+  public List<IntermediateResult> getIntermediateResults() {
+      return intermediateResults;
+  }
 
-    public void setQuotient(StringBuilder quotient) {
-        this.quotient = quotient;
-    }
+  public void setIntermediateResults(List<IntermediateResult> intermediateResults) {
+      this.intermediateResults = intermediateResults;
+  }
 }
