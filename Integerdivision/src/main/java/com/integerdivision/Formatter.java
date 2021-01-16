@@ -3,84 +3,85 @@ package com.integerdivision;
 import java.util.List;
 
 public class Formatter {
-  private int dividend;
-  private int divisor;
-  private StringBuilder result;
-  private StringBuilder quotient;
   private final String LINE_SEPARATOR = System.lineSeparator();
 
   public String format(DivisionResultDTO dto) {
-      List<IntermediateResult> intermediateResults = dto.getIntermediateResults();
-      this.dividend = dto.getDividend();
-      this.divisor = dto.getDivisor();
-      this.quotient = dto.getQuotient();
-      this.result = new StringBuilder();
+    List<IntermediateResult> intermediateResults = dto.getIntermediateResults();
+    int dividend = dto.getDividend();
+    int divisor = dto.getDivisor();
+    StringBuilder quotient = dto.getQuotient();
+    StringBuilder result = new StringBuilder();
 
-      int localDividend;
-      int squareLocalResult;
-      int count;
-      int endOfFormatting = intermediateResults.size() - 1;
+    int localDividend;
+    int squareLocalResult;
+    int digitIndex = 0;
 
-      for (int i = 0; i < intermediateResults.size(); i++) {
-          localDividend = intermediateResults.get(i).getLocalDividend();
-          squareLocalResult = intermediateResults.get(i).getSquareLocalResult();
-          count = intermediateResults.get(i).getCount();
+    for (int i = 0; i < intermediateResults.size(); i++) {
+      IntermediateResult intermediateResult = intermediateResults.get(i);
+      localDividend = intermediateResult.getLocalDividend();
+      squareLocalResult = intermediateResult.getSquareLocalResult();
+      digitIndex = intermediateResult.getDigitIndex();
 
-          String localDividendString = String.format("%" + (count + 2) + "s", "_" + localDividend);
-          result.append(localDividendString).append(LINE_SEPARATOR);
+      String localDividendString = String.format("%" + (digitIndex + 2) + "s", "_" + localDividend);
+      result.append(localDividendString).append(LINE_SEPARATOR);
 
-          String squareLocalResultString = String.format("%" + (count + 2) + "d", squareLocalResult);
-          result.append(squareLocalResultString).append(LINE_SEPARATOR);
+      String squareLocalResultString = String.format("%" + (digitIndex + 2) + "d", squareLocalResult);
+      result.append(squareLocalResultString).append(LINE_SEPARATOR);
 
-          int numberOfSpaces = localDividendString.length() - DivisionUtils.countDigits(squareLocalResult);
-          if (intermediateResults.size() == 1) {
-              numberOfSpaces = 1;
-          }
-          int numberOfDashes = DivisionUtils.countDigits(localDividend);
-          result.append(DivisionUtils.makeDelimiter(numberOfSpaces, numberOfDashes)).append(LINE_SEPARATOR);
-
-          if (i == endOfFormatting) {
-              result.append(String.format("%" + (count + 2) + "d", intermediateResults.get(i).getMod()))
-                      .append(LINE_SEPARATOR);
-          }
+      int numberOfSpaces;
+      if (intermediateResults.size() == 1) {
+        numberOfSpaces = 1;
+      } 
+      else {
+        numberOfSpaces = localDividendString.length() - DivisionUtils.countDigits(squareLocalResult);
       }
-      finalFormatting();
-      return result.toString();
+      int numberOfDashes = DivisionUtils.countDigits(localDividend);
+      result.append(DivisionUtils.makeDelimiter(numberOfSpaces, numberOfDashes)).append(LINE_SEPARATOR);
+    }
+    
+    int lastDigit = intermediateResults.get(intermediateResults.size() - 1).getMod(); 
+    result.append(String.format("%" + (digitIndex + 2) + "d", lastDigit)).append(LINE_SEPARATOR);
+
+    finalFormatting(dividend, divisor, result, quotient);
+    return result.toString();
   }
 
-  private void finalFormatting() {
-      int[] index = calculateIndexes();
+  private void finalFormatting(int dividend, int divisor, StringBuilder result, StringBuilder quotient) {
+    int[] newLineIndex = findNewLineIndexes(result);
 
-      int numberOfSpaces = DivisionUtils.countDigits(dividend) + 1 - index[0];
-      result.insert(index[2], DivisionUtils.buildString(numberOfSpaces, ' ') + "|" + quotient.toString());
-      result.insert(index[1], DivisionUtils.buildString(numberOfSpaces, ' ') + "|"
-              + DivisionUtils.buildString(quotient.length(), '-'));
-      result.insert(index[0], "|" + divisor);
-      result.replace(1, index[0], Integer.toString(dividend));
+    int numberOfSpaces = DivisionUtils.countDigits(dividend) + 1 - newLineIndex[0];
+    result.insert(newLineIndex[2], DivisionUtils.buildString(numberOfSpaces, ' ') + "|" + quotient.toString());
+    result.insert(newLineIndex[1],
+        DivisionUtils.buildString(numberOfSpaces, ' ') + "|" + DivisionUtils.buildString(quotient.length(), '-'));
+    result.insert(newLineIndex[0], "|" + divisor);
+    result.replace(1, newLineIndex[0], Integer.toString(dividend));
   }
 
-  private int[] calculateIndexes() {
-      int[] index = new int[3];
-      char separator;
+  private int[] findNewLineIndexes(StringBuilder result) {
+    char separator;
 
-      if (LINE_SEPARATOR.equals("\r\n") || LINE_SEPARATOR.equals("\r")) {
-          separator = '\r';
-      } else {
-          separator = '\n';
-      }
-      findIndexes(index, separator);
-      return index;
+    if (LINE_SEPARATOR.equals("\r\n") || LINE_SEPARATOR.equals("\r")) {
+      separator = '\r';
+    } 
+    else {
+      separator = '\n';
+    }
+
+    return findIndexes(separator, result);
   }
 
-  private void findIndexes(int[] index, char separator) {
-      for (int i = 0, j = 0; i < result.length(); i++) {
-          if (result.charAt(i) == separator) {
-              index[j] = i;
-              j++;
-          }
-          if (j == 3) {
-              break;
-          }
+  private int[] findIndexes(char separator, StringBuilder result) {
+    int[] newLineIndexes = new int[3];
+
+    for (int i = 0, j = 0; i < result.length(); i++) {
+      if (result.charAt(i) == separator) {
+        newLineIndexes[j] = i;
+        j++;
       }
+      if (j == 3) {
+        break;
+      }
+    }
+    return newLineIndexes;
   }
 }

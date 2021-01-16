@@ -6,7 +6,7 @@ public class Main {
     
     Formatter formatter = new Formatter();
 
-    LongDivision longDivision = new LongDivision();
+    Division longDivision = new Division();
     int dividend = 78945;
     int divisor = 4;
     DivisionResultDTO divisionResultDTO = longDivision.doDivision(dividend, divisor);

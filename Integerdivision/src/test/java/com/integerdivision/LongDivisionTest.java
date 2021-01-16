@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class LongDivisionTest {
   
   Formatter formatter = new Formatter();
-  LongDivision division = new LongDivision();
+  Division division = new Division();
 
   @Test
   void doDivision_whenSimpleIntegers() {

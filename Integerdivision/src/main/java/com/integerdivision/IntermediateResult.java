@@ -4,13 +4,13 @@ public class IntermediateResult {
   private final int localDividend;
   private final int squareLocalResult;
   private final int mod;
-  private final int count;
+  private final int digitIndex;
 
-  public IntermediateResult(int localDividend, int squareLocalResult, int mod, int count) {
+  public IntermediateResult(int localDividend, int squareLocalResult, int mod, int digitIndex) {
       this.localDividend = localDividend;
       this.squareLocalResult = squareLocalResult;
       this.mod = mod;
-      this.count = count;
+      this.digitIndex = digitIndex;
   }
 
   public int getLocalDividend() {
@@ -25,7 +25,7 @@ public class IntermediateResult {
       return mod;
   }
 
-  public int getCount() {
-      return count;
+  public int getDigitIndex() {
+      return digitIndex;
   }
 }
