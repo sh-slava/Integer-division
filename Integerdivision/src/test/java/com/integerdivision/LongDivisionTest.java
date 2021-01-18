@@ -115,12 +115,12 @@ class LongDivisionTest {
   }
   
   @Test
-  void doDivision_shouldThrowException_whenDivisorIsZero() {
+  void doDivision_shouldThrowArithmeticException_whenDivisorIsZero() {
     assertThrows(ArithmeticException.class, () -> division.doDivision(123, 0));
   }
   
   @Test
-  void doDivision_shouldThrowException_whenBothZero() {
+  void doDivision_shouldThrowArithmeticException_whenBothZero() {
     assertThrows(ArithmeticException.class, () -> division.doDivision(0, 0));
   }
 }
