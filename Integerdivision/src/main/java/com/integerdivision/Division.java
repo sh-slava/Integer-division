@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Division {
 
-  public DivisionResultDTO doDivision(int dividend, int divisor) {
+  public DivisionResult doDivision(int dividend, int divisor) {
 
     if (divisor == 0) {
       throw new ArithmeticException("Error! Divisor should be above zero");
@@ -18,14 +18,14 @@ public class Division {
     return getResultOfDivision(dividend, divisor);
   }
 
-  private DivisionResultDTO getResultOfDivision(int dividend, int divisor) {
+  private DivisionResult getResultOfDivision(int dividend, int divisor) {
     StringBuilder remainder = new StringBuilder();
     StringBuilder quotient = new StringBuilder();
-    List<IntermediateResult> intermediateResults = new ArrayList<>();
+    List<DivisionIntermediateResult> intermediateResults = new ArrayList<>();
 
     if (dividend < divisor) {
       quotient.append("0");
-      intermediateResults.add(new IntermediateResult(dividend, 0, dividend, Integer.toString(dividend).length() - 1));
+      intermediateResults.add(new DivisionIntermediateResult(dividend, 0, dividend, Integer.toString(dividend).length() - 1));
       return getDivisionResultDTO(dividend, divisor, quotient, intermediateResults);
     }
 
@@ -43,7 +43,7 @@ public class Division {
         mod = localDividend % divisor;
         squareLocalResult = (localDividend / divisor) * divisor;
 
-        intermediateResults.add(new IntermediateResult(localDividend, squareLocalResult, mod, digitIndex));
+        intermediateResults.add(new DivisionIntermediateResult(localDividend, squareLocalResult, mod, digitIndex));
         quotient.append(localDividend / divisor);
         remainder.replace(0, remainder.length(), Integer.toString(mod));
       } 
@@ -56,9 +56,9 @@ public class Division {
     return getDivisionResultDTO(dividend, divisor, quotient, intermediateResults);
   }
 
-  private DivisionResultDTO getDivisionResultDTO(int dividend, int divisor, StringBuilder quotient,
-      List<IntermediateResult> intermediateResults) {
-    DivisionResultDTO dto = new DivisionResultDTO();
+  private DivisionResult getDivisionResultDTO(int dividend, int divisor, StringBuilder quotient,
+      List<DivisionIntermediateResult> intermediateResults) {
+    DivisionResult dto = new DivisionResult();
     dto.setDividend(dividend);
     dto.setDivisor(divisor);
     dto.setQuotient(quotient);

@@ -2,11 +2,11 @@ package com.integerdivision;
 
 import java.util.List;
 
-public class DivisionResultDTO {
+public class DivisionResult {
   private int dividend;
   private int divisor;
   private StringBuilder quotient;
-  private List<IntermediateResult> intermediateResults;
+  private List<DivisionIntermediateResult> intermediateResults;
 
   public int getDividend() {
       return dividend;
@@ -32,11 +32,11 @@ public class DivisionResultDTO {
       this.quotient = quotient;
   }
 
-  public List<IntermediateResult> getIntermediateResults() {
+  public List<DivisionIntermediateResult> getIntermediateResults() {
       return intermediateResults;
   }
 
-  public void setIntermediateResults(List<IntermediateResult> intermediateResults) {
+  public void setIntermediateResults(List<DivisionIntermediateResult> intermediateResults) {
       this.intermediateResults = intermediateResults;
   }
 }

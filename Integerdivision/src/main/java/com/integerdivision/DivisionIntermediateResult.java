@@ -1,12 +1,12 @@
 package com.integerdivision;
 
-public class IntermediateResult {
+public class DivisionIntermediateResult {
   private final int localDividend;
   private final int squareLocalResult;
   private final int mod;
   private final int digitIndex;
 
-  public IntermediateResult(int localDividend, int squareLocalResult, int mod, int digitIndex) {
+  public DivisionIntermediateResult(int localDividend, int squareLocalResult, int mod, int digitIndex) {
       this.localDividend = localDividend;
       this.squareLocalResult = squareLocalResult;
       this.mod = mod;

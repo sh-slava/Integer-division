@@ -3,10 +3,9 @@ package com.integerdivision;
 public class DivisionUtils {
 
   private DivisionUtils() {
-    throw new IllegalStateException("This is Utility class");
   }
 
-  public static String makeDelimiter(int numberOfSpaces, int numberOfDashes) {
+  public static String buildDelimiter(int numberOfSpaces, int numberOfDashes) {
     return buildString(numberOfSpaces, ' ') + buildString(numberOfDashes, '-');
   }
 

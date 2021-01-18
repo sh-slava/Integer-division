@@ -5,8 +5,8 @@ import java.util.List;
 public class Formatter {
   private final String LINE_SEPARATOR = System.lineSeparator();
 
-  public String format(DivisionResultDTO dto) {
-    List<IntermediateResult> intermediateResults = dto.getIntermediateResults();
+  public String format(DivisionResult dto) {
+    List<DivisionIntermediateResult> intermediateResults = dto.getIntermediateResults();
     int dividend = dto.getDividend();
     int divisor = dto.getDivisor();
     StringBuilder quotient = dto.getQuotient();
@@ -17,7 +17,7 @@ public class Formatter {
     int digitIndex = 0;
 
     for (int i = 0; i < intermediateResults.size(); i++) {
-      IntermediateResult intermediateResult = intermediateResults.get(i);
+      DivisionIntermediateResult intermediateResult = intermediateResults.get(i);
       localDividend = intermediateResult.getLocalDividend();
       squareLocalResult = intermediateResult.getSquareLocalResult();
       digitIndex = intermediateResult.getDigitIndex();
@@ -36,7 +36,7 @@ public class Formatter {
         numberOfSpaces = localDividendString.length() - DivisionUtils.countDigits(squareLocalResult);
       }
       int numberOfDashes = DivisionUtils.countDigits(localDividend);
-      result.append(DivisionUtils.makeDelimiter(numberOfSpaces, numberOfDashes)).append(LINE_SEPARATOR);
+      result.append(DivisionUtils.buildDelimiter(numberOfSpaces, numberOfDashes)).append(LINE_SEPARATOR);
     }
     
     int lastDigit = intermediateResults.get(intermediateResults.size() - 1).getMod(); 
@@ -67,10 +67,10 @@ public class Formatter {
       separator = '\n';
     }
 
-    return findIndexes(separator, result);
+    return findNewLineIndexes(separator, result);
   }
 
-  private int[] findIndexes(char separator, StringBuilder result) {
+  private int[] findNewLineIndexes(char separator, StringBuilder result) {
     int[] newLineIndexes = new int[3];
 
     for (int i = 0, j = 0; i < result.length(); i++) {
