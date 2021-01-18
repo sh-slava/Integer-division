@@ -3,10 +3,10 @@ package com.integerdivision;
 import java.util.List;
 
 public class DivisionResult {
-  private int dividend;
-  private int divisor;
-  private StringBuilder quotient;
-  private List<DivisionIntermediateResult> intermediateResults;
+  private final int dividend;
+  private final int divisor;
+  private final StringBuilder quotient;
+  private final List<DivisionIntermediateResult> intermediateResults;
 
   public DivisionResult(int dividend, int divisor, StringBuilder quotient,
       List<DivisionIntermediateResult> intermediateResults) {
