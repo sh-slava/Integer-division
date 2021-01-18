@@ -8,35 +8,27 @@ public class DivisionResult {
   private StringBuilder quotient;
   private List<DivisionIntermediateResult> intermediateResults;
 
-  public int getDividend() {
-      return dividend;
+  public DivisionResult(int dividend, int divisor, StringBuilder quotient,
+      List<DivisionIntermediateResult> intermediateResults) {
+    this.dividend = dividend;
+    this.divisor = divisor;
+    this.quotient = quotient;
+    this.intermediateResults = intermediateResults;
   }
 
-  public void setDividend(int dividend) {
-      this.dividend = dividend;
+  public int getDividend() {
+      return dividend;
   }
 
   public int getDivisor() {
       return divisor;
   }
 
-  public void setDivisor(int divisor) {
-      this.divisor = divisor;
-  }
-
   public StringBuilder getQuotient() {
       return quotient;
   }
 
-  public void setQuotient(StringBuilder quotient) {
-      this.quotient = quotient;
-  }
-
   public List<DivisionIntermediateResult> getIntermediateResults() {
       return intermediateResults;
-  }
-
-  public void setIntermediateResults(List<DivisionIntermediateResult> intermediateResults) {
-      this.intermediateResults = intermediateResults;
   }
 }

@@ -26,7 +26,7 @@ public class Division {
     if (dividend < divisor) {
       quotient.append("0");
       intermediateResults.add(new DivisionIntermediateResult(dividend, 0, dividend, Integer.toString(dividend).length() - 1));
-      return getDivisionResultDTO(dividend, divisor, quotient, intermediateResults);
+      return new DivisionResult(dividend, divisor, quotient, intermediateResults);
     }
 
     String[] dividendDigits = String.valueOf(dividend).split("");
@@ -53,16 +53,6 @@ public class Division {
         }
       }
     }
-    return getDivisionResultDTO(dividend, divisor, quotient, intermediateResults);
-  }
-
-  private DivisionResult getDivisionResultDTO(int dividend, int divisor, StringBuilder quotient,
-      List<DivisionIntermediateResult> intermediateResults) {
-    DivisionResult dto = new DivisionResult();
-    dto.setDividend(dividend);
-    dto.setDivisor(divisor);
-    dto.setQuotient(quotient);
-    dto.setIntermediateResults(intermediateResults);
-    return dto;
+    return new DivisionResult(dividend, divisor, quotient, intermediateResults);
   }
 }
